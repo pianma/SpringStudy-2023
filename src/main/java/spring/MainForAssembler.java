@@ -73,6 +73,7 @@ public class MainForAssembler {
             System.out.println("이메일과 암호가 일치하지 않음");
         }
     }
+    깃테스트
     private static void printHelp(){
         System.out.println();
         System.out.println("잘못된 명령입니다. 아래 명령어 사용법을 확인하세요");
