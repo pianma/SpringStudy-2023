@@ -1,15 +1,23 @@
-package spring;
+package main;
+
+import config.AppCtx;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import spring.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class MainForAssembler {
+public class MainForSpring{
+
+    private static ApplicationContext ctx = null;
 
     public static void main(String[] args)throws IOException {
 
         BufferedReader reader = new BufferedReader((new InputStreamReader(System.in)));
 
+        ctx = new AnnotationConfigApplicationContext(AppCtx.class);
         while (true){
             System.out.println("명령어를 입력하세요");
             String command = reader.readLine();
@@ -37,7 +45,8 @@ public class MainForAssembler {
             return;
         }
 
-        MemberRegisterService regSvc = assembler.getMemberRegisterService();
+        MemberRegisterService regSvc =
+                ctx.getBean("memberRegSvc", MemberRegisterService.class);
         RegisterRequest req = new RegisterRequest();
         req.setEmail(arg[1]);
         req.setName(arg[2]);
@@ -63,7 +72,8 @@ public class MainForAssembler {
             return;
         }
 
-        ChangePasswordService changePwsSvc = assembler.getChangePasswordService();
+        ChangePasswordService changePwsSvc =
+                ctx.getBean("changePwdSvc", ChangePasswordService.class);
         try{
             changePwsSvc.changePassword(arg[1], arg[2], arg[3]);
             System.out.println("암호를 변경했습니다.");
